@@ -14,6 +14,7 @@ import { useFonts } from "expo-font"
 
 import Login from './src/components/Login';
 import Main from './src/components/Main';
+import Profile from './src/components/Main/Profile';
 import { AuthProvider } from './src/components/Auth';
 
 //-------------------------------------------------------------------------------------
@@ -28,7 +29,7 @@ export default function App() {
 
   //SESSÃO DE HOOKS DO REACT-NATIVE ---------------------------------------------------
 
-    const [isLogged, setIsLogged] = useState(false); //Diponibiliza telas diferentes se o usuário estiver logado ou não.
+    const [isLogged, setIsLogged] = useState(true); //Diponibiliza telas diferentes se o usuário estiver logado ou não.
     const [isSplashReady, setIsSplashReady] = useState(false); //Controla a exibição da tela de splash.
 
 
@@ -69,7 +70,12 @@ export default function App() {
     const selectScreen = () => {
       if (isLogged) {
         return (
-          <Stack.Screen name="Main" component={Main}/>
+          <Stack.Group>
+            <Stack.Screen name="Main" options={
+              {headerShown: false}
+            } component={Main}/>
+            <Stack.Screen name="Perfil" component={Profile}/>
+          </Stack.Group>
         )
       }
       else{
