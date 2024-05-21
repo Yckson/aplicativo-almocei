@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 
 //Criação do contexto de autenticação
@@ -20,9 +20,11 @@ export function useAuth() {
 export function AuthProvider({value, children }) {
     const { isLogged, setIsLogged } = value;
 
+    const userImage = require("../../../assets/dev_placeholders/user-temp.png"); //Lembrar que isso é temporário, enquanto não existe back-end
+
     //Fornece o provedor de autenticação para os componentes filhos
     return (
-        <AuthContext.Provider value={{ isLogged, setIsLogged }}>
+        <AuthContext.Provider value={{ isLogged, setIsLogged, userImage }}>
             {children}
         </AuthContext.Provider>
     );

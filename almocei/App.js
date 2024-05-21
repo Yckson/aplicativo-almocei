@@ -1,5 +1,6 @@
 // Sessão de importação de bibliotecas-------------------------------------------------
 
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useState, Fragment, useEffect } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
@@ -36,6 +37,8 @@ export default function App() {
     //Importação das fontes personalizadas.
     const [fontsLoaded] = useFonts({
       Montserrat: require("./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"),
+      MontserratBold: require("./assets/fonts/Montserrat/static/Montserrat-Bold.ttf"),
+      MontserratSemiBold: require("./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf"),
       MontserratItalic: require("./assets/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf"),
     });
 
