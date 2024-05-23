@@ -15,7 +15,7 @@ export default function Login({ route, navigation }) {
         const [password, setPassword] = useState("");
         const [loginError, setLoginError] = useState(false);
         const [passwordError, setPasswordError] = useState(false);
-        const { setIsLogged } = useAuth(); //Importando a função que vai mudar o estado de login
+        const { setIsLogged, setUser, user } = useAuth(); //Importando a função que vai mudar o estado de login
     
 
     //-------------------------------------------------------------------------------------
@@ -65,10 +65,15 @@ export default function Login({ route, navigation }) {
             if(validateLogin() & validatePassword()){
                 console.log("Logado com sucesso");
                 setIsLogged(true);
+                const userType = 'student';
+                //Posteriomente, a função setUser vai ser chamada com os dados do usuário logado
+                setUser({name: "Victor Bruno Silva Barbosa", matricula: "2019000000", userType: userType});
+                console.log('Entrando como: ', userType);
 
                 return true;
             }
-            
+
+            setUser({});
             console.log("Erro ao logar");
             return false;
         }

@@ -17,14 +17,16 @@ export function useAuth() {
 
 
 //Função que fornece o contexto de autenticação para os componentes filhos
-export function AuthProvider({value, children }) {
+export function AuthProvider({value, userData, children }) {
     const { isLogged, setIsLogged } = value;
+    const { user, setUser } = userData;
+
 
     const userImage = require("../../../assets/dev_placeholders/user-temp.png"); //Lembrar que isso é temporário, enquanto não existe back-end
 
     //Fornece o provedor de autenticação para os componentes filhos
     return (
-        <AuthContext.Provider value={{ isLogged, setIsLogged, userImage }}>
+        <AuthContext.Provider value={{ isLogged, setIsLogged, userImage, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );

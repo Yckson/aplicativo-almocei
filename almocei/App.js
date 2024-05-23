@@ -27,11 +27,45 @@ export default function App() {
 
   const Stack = createNativeStackNavigator(); //Criação de um navegador de pilha para a navegação entre telas.
 
+  //Usuário de exemplo para testes.
+  const exempleUserStudent = {
+    name: "Victor Bruno da Silva Barbosa",
+    matricula: "2019000001",
+    email: "victorbruno@gmail.com",
+    userType: "student",
+  };
+
+  //Usuário de exemplo para testes.
+  const exempleUserAdm = {
+    name: "Victor Bruno da Silva Barbosa",
+    matricula: "2019000001",
+    email: "victorbruno@gmail.com",
+    userType: "adm",
+  };
+
 
   //SESSÃO DE HOOKS DO REACT-NATIVE ---------------------------------------------------
 
     const [isLogged, setIsLogged] = useState(true); //Diponibiliza telas diferentes se o usuário estiver logado ou não.
     const [isSplashReady, setIsSplashReady] = useState(false); //Controla a exibição da tela de splash.
+    const [user, setUser] = useState({}); //Armazena os dados do usuário logado.
+
+
+    //Apenas para testes--------------------------------
+    
+    useEffect(() => {
+      if (isLogged) {
+        //setUser(exempleUserStudent);
+        setUser(exempleUserAdm);
+        console.log('Falsamente logado! App.js linha 59')
+      }
+      else{
+        //setUser({});
+      }
+    }, [isLogged]); //Define o usuário de acordo com o estado de login.
+
+
+    //-------------------------------------------------
 
 
     //Importação das fontes personalizadas.
@@ -40,6 +74,7 @@ export default function App() {
       MontserratBold: require("./assets/fonts/Montserrat/static/Montserrat-Bold.ttf"),
       MontserratSemiBold: require("./assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf"),
       MontserratItalic: require("./assets/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf"),
+      MontserratMedium: require("./assets/fonts/Montserrat/static/Montserrat-Medium.ttf"),
     });
 
         //Esconde a tela de splash quando as fontes são carregadas.
@@ -64,7 +99,7 @@ export default function App() {
 
   //Funções---------------------------------------------------------------------------
 
-
+    
 
 
   
@@ -98,7 +133,7 @@ export default function App() {
   //Renderização do aplicativo---------------------------------------------------------
   return (
     <Fragment>
-      <AuthProvider value={{ isLogged, setIsLogged }}>
+      <AuthProvider value={{ isLogged, setIsLogged }} userData={{user, setUser}}>
         <NavigationContainer>
           <Stack.Navigator>
             {selectScreen()}
