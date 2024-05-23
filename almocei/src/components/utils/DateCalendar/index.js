@@ -18,6 +18,11 @@ export function formatDate(date) {
 
 }
 
+export function customRamdomKey() {
+  const date = new Date();
+  return date.getTime().toString();
+}
+
 //Componente que renderiza o calendário de seleção de data.
 
 export default function DateCalendar({ controller }){

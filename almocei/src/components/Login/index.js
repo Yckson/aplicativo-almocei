@@ -65,7 +65,7 @@ export default function Login({ route, navigation }) {
             if(validateLogin() & validatePassword()){
                 console.log("Logado com sucesso");
                 setIsLogged(true);
-                const userType = 'student';
+                const userType = 'adm';
                 //Posteriomente, a função setUser vai ser chamada com os dados do usuário logado
                 setUser({name: "Victor Bruno Silva Barbosa", matricula: "2019000000", userType: userType});
                 console.log('Entrando como: ', userType);

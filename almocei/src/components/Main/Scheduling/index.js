@@ -74,6 +74,7 @@ function SchedulingAdm({ schedules }){
     const [showCalendar, setShowCalendar] = useState(false); //Armazena o estado do calendário.
     const [date, setDate] = useState(new Date()); //Armazena a data selecionada no calendário.
     const [total, setTotal] = useState(0); //Armazena o total de agendamentos.
+    const [search, setSearch] = useState(""); //Armazena o texto da barra de pesquisa.
 
     //Apenas para testes--------------------------------
 
@@ -84,13 +85,21 @@ function SchedulingAdm({ schedules }){
     }, [schedules]); //Define o total de agendamentos.
 
     //-------------------------------------------------
+
+    //Função que filtra os agendamentos de acordo com o texto da barra de pesquisa.
+    const handleSearch = (text) => {
+        setSearch(text);
+    }
+    //-------------------------------------------------
+
+    //Renderização da tela de agendamentos do administrador.
         return (
             <View style={STYLE.container}>
                 <View style={STYLE.headerAdm}>
                     <View style={STYLE.searchSection}>
                         <View style={STYLE.searchBar}>
                             <FontAwesome name="search" size={24} color="#000" />
-                            <TextInput style={STYLE.searchBarInput} placeholder="Pesquisar" />
+                            <TextInput style={STYLE.searchBarInput} placeholder="Pesquisar" value={search} onChangeText={handleSearch}/>
                         </View>
                         <TouchableOpacity style={STYLE.addScheduleAdm}>
                             <FontAwesome name="plus" size={24} color="#2F9E41" />

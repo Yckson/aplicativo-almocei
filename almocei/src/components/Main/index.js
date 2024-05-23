@@ -10,6 +10,7 @@ import STYLE from './style';
 import Scheduling from './Scheduling';
 import Extract from './Extract';
 import Absence from './Absence';
+import Menu from './Menu';
 import NavbarTop from '../utils/NavbarTop';
 
 const Tab = createBottomTabNavigator();
@@ -70,7 +71,7 @@ export default function Main({ route, navigation }) {
             {/* Abaixo estão as abas do aplicativo. */}
             
             <Tab.Screen name="Agendamento" component={Scheduling}/>
-            <Tab.Screen name="Cardápio" component={Extract} />
+            <Tab.Screen name="Cardápio" options={{lazy: false}} component={Menu} />
             <Tab.Screen name="Ausência" component={Absence} />
             <Tab.Screen name="Extrato" component={Extract} />
         </Tab.Navigator>

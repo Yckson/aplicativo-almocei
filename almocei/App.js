@@ -46,7 +46,7 @@ export default function App() {
 
   //SESSÃO DE HOOKS DO REACT-NATIVE ---------------------------------------------------
 
-    const [isLogged, setIsLogged] = useState(true); //Diponibiliza telas diferentes se o usuário estiver logado ou não.
+    const [isLogged, setIsLogged] = useState(false); //Diponibiliza telas diferentes se o usuário estiver logado ou não.
     const [isSplashReady, setIsSplashReady] = useState(false); //Controla a exibição da tela de splash.
     const [user, setUser] = useState({}); //Armazena os dados do usuário logado.
 
@@ -56,8 +56,10 @@ export default function App() {
     useEffect(() => {
       if (isLogged) {
         //setUser(exempleUserStudent);
-        setUser(exempleUserAdm);
-        console.log('Falsamente logado! App.js linha 59')
+        //setUser(exempleUserAdm);
+
+        //Se quiser usar a tela de login do início, alterar também o userType no arquivo Login/index.js
+        //console.log(`Falsamente logado! App.js linha 62`)
       }
       else{
         //setUser({});
