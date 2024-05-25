@@ -5,7 +5,7 @@ import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import STYLE from './style';
 
 import { useAuth } from '../../Auth';
-import DateCalendar, { formatDate } from '../../utils/DateCalendar';
+import DateCalendar, { formatDate, customRamdomKey } from '../../utils/DateCalendar';
 
 //Componente que renderiza um agendamento.
 function Schedule({ schedule }) {
@@ -30,6 +30,8 @@ function Schedule({ schedule }) {
 }
 
 
+
+
 //Componente que renderiza a tela de agendamentos vazia.
 function SchedulingEmpty() {
     return (
@@ -45,7 +47,7 @@ function SchedulingEmpty() {
 
 
 //Componente que renderiza a tela de agendamentos do aluno.
-function SchedulingStudent({ schedules }){
+function SchedulingStudent({ schedules, isAbsense }){
     return (
         <View style={STYLE.container}>
             {   
@@ -53,16 +55,21 @@ function SchedulingStudent({ schedules }){
 
                 <FlatList style={STYLE.schedulesList}
                 data={schedules}
-                keyExtractor={schedule => String(schedule.id)}
+                keyExtractor={schedule => customRamdomKey(10)}
                 renderItem={(item)=>{
                     const schedule = item.item;
                     return <Schedule schedule={schedule} />
                 }}
                 />
             }
-            <TouchableOpacity style={STYLE.addScheduleBtn} onPress={() => {console.log('Adicionando agendamento!')}}>
-                <FontAwesome name="plus-circle" size={60} color="#2F9E41" />
-            </TouchableOpacity>
+            {
+                !isAbsense ?
+                <TouchableOpacity style={STYLE.addScheduleBtn} onPress={() => {console.log('Adicionando agendamento!')}}>
+                    <FontAwesome name="plus-circle" size={60} color="#2F9E41" />
+                </TouchableOpacity>
+                :
+                null
+            }
         </View>
     );
 
@@ -140,7 +147,7 @@ function SchedulingAdm({ schedules }){
 
 //Componente que renderiza a tela de agendamentos.
 
-export default function Scheduling({ navigation }) {
+export default function Scheduling({ navigation, route }) {
 
     const exempleSchedules = [
         {
@@ -217,6 +224,8 @@ export default function Scheduling({ navigation }) {
 
     const [schedules, setSchedules] = useState([]); //Armazena os agendamentos do usuário.
     const { user, setUser } = useAuth(); //Desestruturação do contexto de autenticação.
+    const [isAbsense, setIsAbsense] = useState(typeof(route) == 'undefined');
+    //const [isAbsense, setIsAbsense] = useState(route.name == 'Ausência');
 
     //Apenas para testes--------------------------------
 
@@ -228,7 +237,9 @@ export default function Scheduling({ navigation }) {
 
     
     return (
-        user.userType === "adm" ? <SchedulingAdm schedules={schedules} /> : <SchedulingStudent schedules={schedules} /> //Renderiza a tela de agendamentos de acordo com o tipo de usuário.
+        user.userType === "adm" ? <SchedulingAdm schedules={schedules} isAbsense={isAbsense} /> : <SchedulingStudent schedules={schedules} isAbsense={isAbsense}/> //Renderiza a tela de agendamentos de acordo com o tipo de usuário.
         
     );
 }
+
+export { Schedule, SchedulingAdm, SchedulingStudent }; //Exporta o componente Schedule.

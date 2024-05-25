@@ -2,8 +2,33 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {Calendar, LocaleConfig} from 'react-native-calendars';
 
 import STYLE from "./style";
+
+
+LocaleConfig.locales['ptBR'] = {
+  monthNames: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ],
+  monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+  dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+  dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+  today: "Hoje"
+};
+
+LocaleConfig.defaultLocale = 'ptBR';
 
 
 
@@ -18,9 +43,39 @@ export function formatDate(date) {
 
 }
 
-export function customRamdomKey() {
-  const date = new Date();
-  return date.getTime().toString();
+
+//Função que gera uma chave aleatória.
+export function customRamdomKey(length) {
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = ' ';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+
+}
+
+export function Diary({ controller }){
+    const { selectedDate, setSelectedDate, absenseDays, } = controller;
+    const [markedDays, setMarkedDays] = useState({...absenseDays, [selectedDate]: {selected: true, selectedColor: '#2F9E41'}});
+
+    return (
+      <Calendar
+        onDayPress={day => {
+          console.log(markedDays);
+          setSelectedDate(day.dateString);
+          setMarkedDays({...absenseDays, [day.dateString]: {selected: true, selectedColor: '#2F9E41'}});
+        }}
+        markedDates={markedDays}
+        renderArrow={(direction) => <FontAwesome name={`chevron-${direction}`} size={20} color="#2F9E41" />}
+        theme={{
+          todayTextColor: '#2F9E41',
+        }}
+        showSixWeeks={true}
+      />
+    );
 }
 
 //Componente que renderiza o calendário de seleção de data.
